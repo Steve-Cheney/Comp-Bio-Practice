@@ -23,12 +23,12 @@ def list_available_api_calls(pdb_id):
         print(f"An error occurred: {e}")
         return None
 
-
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Please provide the PDB ID as a runtime argument.")
         sys.exit(1)
     pdb_id = sys.argv[1]
+    
     protein_info = get_protein_info(pdb_id)
     if protein_info:
         if 'rcsb_id' in protein_info:
@@ -39,14 +39,13 @@ if __name__ == "__main__":
             print(f"Experimental Method: {protein_info['exptl'][0]['method']}")
         if 'rcsb_entry_info' in protein_info and 'resolution_combined' in protein_info['rcsb_entry_info']:
             print(f"Resolution: {protein_info['rcsb_entry_info']['resolution_combined']} angstroms")
-    
-        available_api_calls = list_available_api_calls(pdb_id)
-        if available_api_calls:
-            print("\nAvailable API calls for the given PDB ID:")
-            for api_call in available_api_calls:
-                print(api_call)
-        else:
-            print("Failed to retrieve available API calls.")
-    
     else:
         print("Failed to retrieve protein information.")
+
+    available_api_calls = list_available_api_calls(pdb_id)
+    if available_api_calls:
+        print("\nAvailable API calls for the given PDB ID:")
+        for api_call in available_api_calls:
+            print(api_call)
+    else:
+        print("Failed to retrieve available API calls.")
